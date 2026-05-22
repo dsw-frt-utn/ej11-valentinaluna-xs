@@ -14,6 +14,54 @@
  * 10. Obtener los libros ordenados por título de forma descendente
  * En todos los casos debe aplicarse LINQ
  */
+
+public class Libro
+{
+    public int Id { get; set; }
+    public string Titulo { get; set; }
+    public decimal Precio { get; set; }
+}
 public class CasoLinq
 {
+    public static Libro? GetPrimero(List<Libro> libros)
+    {
+        return libros.FirstOrDefault();
+    }
+    public static Libro? GetUltimo(List<Libro> libros)
+    {
+        return libros.LastOrDefault();
+    }
+    public static decimal GetTotalPrecios(List<Libro> libros)
+    {
+        return libros.Sum(libro => libro.Precio);
+    }
+    public static decimal GetPromedioPrecios(List<Libro> libros)
+    {
+        return libros.Average(libro => libro.Precio);
+    }
+    public static List<Libro> GetListById(List<Libro> libros)
+    {
+        return libros.Where(libro => libro.Id > 15).ToList();
+    }
+    public static List<string> GetLibros(List<Libro> libros)
+    {
+        return libros.Select(libro => $"{libro.Titulo}: {libro.Precio:C}").ToList();
+    }
+    public static Libro? GetMayorPrecio(List<Libro> libros)
+    {
+        return libros.OrderByDescending(libro => libro.Precio).FirstOrDefault();
+    }
+    public static Libro? GetMenorPrecio(List<Libro> libros)
+    {
+        return libros.OrderBy(libro => libro.Precio).FirstOrDefault();
+    }
+    public static List<Libro> GetMayorPromedio(List<Libro> libros)
+    {
+        decimal promedio = GetPromedioPrecios(libros);
+        return libros.Where(libro => libro.Precio > promedio).ToList();
+    }
+    public static List<Libro> GetLibrosOrdenados(List<Libro> libros)
+    {
+        return libros.OrderByDescending(libro => libro.Titulo).ToList();
+    } 
 }
